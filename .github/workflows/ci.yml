@@ -75,7 +75,7 @@ jobs:
         run: |
           sudo podman exec circuit-dotnet bash -lc '
             set -eux
-            dotnet --version | grep -x 10.0.403
+            dotnet --version | grep -x 10.0.404
             grep -x "export DOTNET_CLI_TELEMETRY_OPTOUT=1" /usr/local/bin/dotnet
             dotnet --list-runtimes | grep -F Microsoft.AspNetCore.App
             cd "$(mktemp -d)"

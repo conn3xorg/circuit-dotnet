@@ -2,7 +2,7 @@
 
 [![Conn3x grade](https://conn3x.org/circuits/dotnet/grade.svg)](https://conn3x.org/circuits/dotnet/grade)
 
-A Conn3x circuit that puts one exact .NET SDK on all your hosts, ASP.NET Core included. The tarball comes from Microsoft's build server and is checked against its SHA-256, so Debian, which doesn't package .NET, gets the same 10.0.403 as everything else. That's the current long-term support channel, 10.0.
+A Conn3x circuit that puts one exact .NET SDK on all your hosts, ASP.NET Core included. The tarball comes from Microsoft's build server and is checked against its SHA-256, so Debian, which doesn't package .NET, gets the same 10.0.404 as everything else. That's the current long-term support channel, 10.0.
 
 It also turns the CLI's telemetry off. Left alone, the `dotnet` command sends Microsoft usage data; here `/usr/local/bin/dotnet` is a small script that sets `DOTNET_CLI_TELEMETRY_OPTOUT=1` and runs the real one, so the setting holds in cron, systemd and SSH commands as well as login shells. To opt in, set `telemetry = true`. [Microsoft documents what it collects](https://learn.microsoft.com/dotnet/core/tools/telemetry).
 
@@ -37,13 +37,13 @@ To try it on a throwaway container first, see [examples/local](examples/local).
 `sdk_version` and `checksums` move together, with one extra step. Microsoft publishes SHA-512 in each channel's [releases.json](https://builds.dotnet.microsoft.com/dotnet/release-metadata/10.0/releases.json), and Conn3x's download step takes SHA-256. So check the tarball against Microsoft's SHA-512, then take its SHA-256 yourself, as the defaults here were:
 
 ```sh
-curl -sSfLO https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.403/dotnet-sdk-10.0.403-linux-x64.tar.gz
-sha512sum dotnet-sdk-10.0.403-linux-x64.tar.gz   # compare with releases.json
-sha256sum dotnet-sdk-10.0.403-linux-x64.tar.gz   # goes in checksums
+curl -sSfLO https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.404/dotnet-sdk-10.0.404-linux-x64.tar.gz
+sha512sum dotnet-sdk-10.0.404-linux-x64.tar.gz   # compare with releases.json
+sha256sum dotnet-sdk-10.0.404-linux-x64.tar.gz   # goes in checksums
 ```
 
 ```hcl
-sdk_version = "10.0.403"
+sdk_version = "10.0.404"
 checksums = {
   x64   = "<SHA-256 of the linux-x64 tarball>"
   arm64 = "<SHA-256 of the linux-arm64 tarball>"
@@ -81,15 +81,15 @@ Before the circuit runs, the `conn3x_host` data source reads each host's archite
 | `ssh_private_key_file` | string | `null` | Path to a private key. When null, Conn3x uses the SSH agent. |
 | `ssh_known_hosts_file` | string | `null` | known_hosts file to check host keys against. When null, `~/.ssh/known_hosts`. Not used for a host object with `host_key`. |
 | `ssh_become` | bool | `false` | Run commands as root through sudo. Set it when `ssh_user` isn't root. |
-| `sdk_version` | string | `"10.0.403"` | SDK release to install. Change `checksums` with it. |
-| `checksums` | map(string) | The tarballs of 10.0.403 | SHA-256 of the `x64` and `arm64` tarballs. See [changing the release](#changing-the-release). |
+| `sdk_version` | string | `"10.0.404"` | SDK release to install. Change `checksums` with it. |
+| `checksums` | map(string) | The tarballs of 10.0.404 | SHA-256 of the `x64` and `arm64` tarballs. See [changing the release](#changing-the-release). |
 | `telemetry` | bool | `false` | Let the CLI send Microsoft its usage telemetry. |
 
 ## Outputs
 
 | Name | Description |
 | --- | --- |
-| `dotnet_root` | Directory of the installed SDK on each host, by host name, such as `{ app1 = "/opt/dotnet/10.0.403" }`. |
+| `dotnet_root` | Directory of the installed SDK on each host, by host name, such as `{ app1 = "/opt/dotnet/10.0.404" }`. |
 
 ## Requirements
 
