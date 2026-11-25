@@ -1,6 +1,6 @@
 # Local example
 
-Applies circuit-dotnet to a throwaway Rocky Linux 10 container with systemd, installing the .NET SDK 10.0.403. You need Conn3x and Podman.
+Applies circuit-dotnet to a throwaway Rocky Linux 10 container with systemd, installing the .NET SDK 10.0.404. You need Conn3x and Podman.
 
 ```sh
 ./up.sh
